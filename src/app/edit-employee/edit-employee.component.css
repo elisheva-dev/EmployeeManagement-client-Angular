@@ -1,0 +1,72 @@
+.error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px; /* כדי לקבוע את גובה ההודעה */
+  }
+  .list{
+    width: 100%;
+  }
+  .btn {
+    display: inline-block; /* כדי לשמור על סגנון הכפתור */
+    line-height: 1; /* גובה של כל התוכן יהיה כפול גובה התווים */
+}
+  .error-message {
+    margin-top: 0.5rem; /* יכול לשנות לפי העדפתך */
+    font-size: 0.875rem;
+    color: #dc3545;
+}
+.edit{
+  border-radius: 50px;
+  background-color: rgb(131, 211, 250);
+  margin: 5px;
+  width: 160px;
+}
+.modal-footer{
+  padding: 2%;
+}
+.btn:hover{
+  background-color: rgb(60, 164, 255);
+}
+.add {
+  font-size: 25px;
+  transition: all 0.1s ease;
+  align-items: center;
+  justify-content: center;  width: 38%;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ccc;
+  display: flex;
+  border-radius: 30px;
+  position: relative;
+  padding: 5px;
+  background-color: rgb(60, 164, 255);
+  transition: all 0.1s ease;
+}
+.add:hover {
+  border-radius: 30px;
+  border-color: #9ccaf1;
+  box-shadow: 0 0 5px rgba(23, 117, 195, 0.5);
+  background-color: rgb(15, 91, 157);
+}
+.roles-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.d {
+  background: none; 
+  border: none; 
+  cursor: pointer;
+  font-size: inherit;
+  vertical-align: middle; 
+}
+.delete {
+  background: none;
+  border: none; 
+  cursor: pointer;
+  color: red;
+  font-size: inherit;
+  vertical-align: middle; 
+}
+

@@ -1,0 +1,150 @@
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+  /* ווידוא כי ה HEADER מוצג מעל כל האיברים האחרים בעמוד */
+}
+.top {
+  display: flex;
+  justify-content: space-evenly;
+}
+.rtl {
+  cursor: default;
+}
+h1,
+h2{
+  margin-top: 1%;
+  margin-right: 2%;
+  cursor: default;
+}
+.add {
+  margin-top: 10pt;
+  margin-right: 10pt;
+  font-size: 25px;
+  transition: all 0.1s ease;
+  /* display: inline-block;  */
+  width: 10%;
+  height: 50px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  background-color: rgb(60, 164, 255);
+}
+.add:hover {
+  border-radius: 50px;
+  border-color: #9ccaf1;
+  box-shadow: 0 0 5px rgba(23, 117, 195, 0.5);
+  background-color: rgb(15, 91, 157);
+}
+.download {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 12%;
+  font-size: 35px;
+  transition: all 0.1s ease;
+  display: inline-block;
+  /* הוספת display כדי לאפשר סגירת גודל */
+  border: none;
+  background: none;
+  padding: 5px;
+}
+.column {
+  font-weight: bold;
+  position:sticky;
+  padding: 1%;
+  top: 22%;
+  z-index: 1;
+  background-color: white;
+}
+.table-with-shadow {
+  box-shadow: 0px 5px rgba(0, 0, 0, 0.3);
+}
+.mat-header-row {
+  box-shadow: none;
+}
+.i:hover {
+  background-color: rgba(212, 220, 223, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+}
+.search {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 30px;
+  transition: all 0.1s ease;
+  display: inline-block;
+  color: #888;
+  padding: 5px;
+  cursor: default;
+}
+.search:hover {
+  background-color: rgba(212, 220, 223, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+}
+.mat-elevation-z8 {
+  direction: rtl;
+  margin-top: 140px; 
+}
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+tr:hover {
+  box-shadow: 0px 5px rgba(0, 0, 0, 0.3);
+  background-color: #f3f5f7;
+}
+.edit-cell button,
+.delete-cell button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+.edit-cell button:hover,
+.delete-cell button:hover {
+  background-color: rgba(212, 220, 223, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+}
+.search-container {
+  width: 78%;
+  height: 50px;
+  position: fixed;
+  margin-top: 2pt;
+  margin-right: 10pt;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid #ccc;
+  padding: 0 30px;
+  position: relative;
+}
+.search-box {
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+  direction: rtl;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0 10px;
+}
+.search-box:focus+.search::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50px;
+  border-color: #2196f3;
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}

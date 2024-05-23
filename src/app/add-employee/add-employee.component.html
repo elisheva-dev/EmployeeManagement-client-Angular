@@ -1,0 +1,78 @@
+<div class="modal-body">
+    <form *ngIf="employeeForm" [formGroup]="employeeForm" class="row g-3">
+        <div class="col-md-4">
+            <label for="inputId" class="form-label">תעודת זהות</label>
+            <input type="text" class="form-control" id="inputId" formControlName="id" placeholder="הכנס תעודת זהות">
+            <div *ngIf="employeeForm.get('id').invalid && (employeeForm.get('id').dirty || employeeForm.get('id').touched)"
+                class="error-message">
+                <span *ngIf="employeeForm.get('id').errors['required']">תעודת זהות היא שדה חובה</span>
+                <span *ngIf="employeeForm.get('id').errors['pattern']">תעודת זהות לא תקינה</span>
+                <span *ngIf="employeeForm.get('id').errors['minlength']">תעודת זהות חייבת להיות מינימום 9 תווים</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="inputFirstName" class="form-label">שם פרטי</label>
+            <input type="text" class="form-control" id="inputFirstName" formControlName="firstName"
+                placeholder="הכנס שם פרטי">
+            <div *ngIf="employeeForm.get('firstName').invalid && (employeeForm.get('firstName').dirty || employeeForm.get('firstName').touched)"
+                class="error-message">
+                <span *ngIf="employeeForm.get('firstName').errors['required']">שם פרטי הוא שדה חובה</span>
+            </div>
+        </div>
+        <!-- שדה לשם משפחה -->
+        <div class="col-md-4">
+            <label for="inputLastName" class="form-label">שם משפחה</label>
+            <input type="text" class="form-control" id="inputLastName" formControlName="lastName"
+                placeholder="הכנס שם משפחה">
+            <div *ngIf="employeeForm.get('lastName').invalid && (employeeForm.get('lastName').dirty || employeeForm.get('lastName').touched)"
+                class="error-message">
+                <span *ngIf="employeeForm.get('lastName').errors['required']">שם משפחה הוא שדה חובה</span>
+            </div>
+        </div>
+
+        <!-- שדה לתאריך תחילת העבודה -->
+        <div class="col-md-4">
+            <label for="inputBeginningWork" class="form-label">תאריך תחילת העבודה</label>
+            <input type="date" class="form-control" id="inputBeginningWork" formControlName="beginningWork">
+            <div *ngIf="employeeForm.get('beginningWork').invalid && (employeeForm.get('beginningWork').dirty || employeeForm.get('beginningWork').touched)"
+                class="error-message">
+                <span *ngIf="employeeForm.get('beginningWork').errors['required']">תאריך תחילת העבודה הוא שדה
+                    חובה</span>
+            </div>
+        </div>
+
+        <!-- שדה לתאריך לידה -->
+        <div class="col-md-4">
+            <label for="inputDateOfBirth" class="form-label">תאריך לידה</label>
+            <input type="date" class="form-control" id="inputDateOfBirth" formControlName="dateOfBirth">
+            <div *ngIf="employeeForm.get('dateOfBirth').invalid && (employeeForm.get('dateOfBirth').dirty || employeeForm.get('dateOfBirth').touched)"
+                class="error-message">
+                <span *ngIf="employeeForm.get('dateOfBirth').errors['required']">תאריך לידה הוא שדה חובה</span>
+            </div>
+        </div>
+
+        <!-- שדה למין -->
+        <div class="col-md-4">
+            <label for="inputGender" class="form-label">מין</label>
+            <div id="inputGender" class="form-check">
+                <input type="radio" class="btn-check" formControlName="gender" id="maleOption" value="0" autocomplete="off" checked>
+                <label class="btn" for="maleOption">זכר</label>
+                <input type="radio" class="btn-check" formControlName="gender" id="femaleOption" value="1" autocomplete="off">
+                <label class="btn" for="femaleOption">נקבה</label> 
+            </div>
+            <div *ngIf="employeeForm.get('gender').invalid && (employeeForm.get('gender').dirty || employeeForm.get('gender').touched)"
+                class="error-message">
+                <span *ngIf="employeeForm.get('gender').errors['required']">מין הוא שדה חובה</span>
+            </div>
+        </div>
+        
+        <button class="add btn btn-primary" mat-raised-button (click)="addRole()">
+            <span>להוספת תפקיד</span>
+            <span class="material-symbols-outlined">add</span>
+        </button>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="saveEmployee()">Save</button>
+        </div>
+    </form>
+</div>

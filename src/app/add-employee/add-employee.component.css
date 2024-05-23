@@ -1,0 +1,54 @@
+.error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px; /* כדי לקבוע את גובה ההודעה */
+    margin-top: 0.5rem; /* יכול לשנות לפי העדפתך */
+    font-size: 0.875rem;
+    color: #dc3545;
+  }
+  .list{
+    width: 100%;
+  }
+  .modal-body form .form-label {
+    margin-bottom: 0.5rem; /* מרווח בין התווית לשדה */
+    padding: 3%;
+  }
+
+  .modal-body form .form-control {
+    max-width: 90%;  /* רוחב השדה */
+    margin-right: auto; /* מידת הקיפול של השדה למרכז */
+    margin-left: auto; /* מידת הקיפול של השדה למרכז */
+  }
+  .add {
+    margin-top: 10pt;
+    margin-right: 10pt;
+    font-size: 25px;
+    transition: all 0.1s ease;
+    width: 35%;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 30px;
+    position: relative;
+    padding: 5px;
+    background-color: rgb(60, 164, 255);
+  
+  }
+  
+  .add:hover {
+    border-radius: 30px;
+    border-color: #9ccaf1;
+    box-shadow: 0 0 5px rgba(23, 117, 195, 0.5);
+    background-color: rgb(15, 91, 157);
+
+  }
+  .modal-footer{
+    padding: 2%;
+  }
+  .btn:hover{
+    background-color: rgb(60, 164, 255);
+  }
