@@ -1,127 +1,81 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../entities/employee.model';
+import { EmployeeRole } from '../entities/employeeRole.model';
 import { EmployeeService } from '../employee.service';
-import { MatTableDataSource } from '@angular/material/table';
-import Swal from 'sweetalert2';
-import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'; // Import MatDialog
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
-import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EditEmployeeComponent } from '../edit-employee/edit-employee.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-all-employees',
   standalone: true,
-  imports: [MatTableModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './all-employees.component.html',
-  styleUrls: ['./all-employees.component.css']
+  styleUrls: ['./all-employees.component.css'],
 })
 export class AllEmployeesComponent implements OnInit {
-  filterByName: string = '';
-  employeesList;
-  displayedColumns: string[] = ['firstName', 'lastName', 'id', 'startDate', 'editIcon', 'deleteIcon'];
-  isLoading: boolean = false; // Add this variable to track loading state
+  employees: Employee[] = [];
+  filteredEmployees: Employee[] = [];
+  searchTerm = '';
+  isLoading = false;
 
-  constructor(private employeeService: EmployeeService, private dialog: MatDialog) { }
+  constructor(private employeeService: EmployeeService) {}
 
   ngOnInit(): void {
-    this.getEmployees();
+    this.loadEmployees();
   }
 
-  getEmployees(): void {
-    this.isLoading = true; // Set loading state to true before fetching data
-    this.employeeService.getEmployeeList().subscribe({
-      next: (res) => {
-        console.log("success");
-        this.employeesList = new MatTableDataSource<Employee>(res);
-        this.isLoading = false; // Set loading state to false after data is loaded
-      },
-      error: (err) => {
-        console.log(err, "error");
-        this.isLoading = false; // Set loading state to false in case of an error
-      }
-    });
-  }
-
-
-  async deleteEmployee(employee: Employee) {
-    const { value: accept } = await Swal.fire({
-      title: "מחיקת עובד",
-      input: "checkbox",
-      inputValue: 1,
-      inputPlaceholder: `
-        האם אתה בטוח שברצונך למחוק את העובד ${employee.firstName} ${employee.lastName} מרשימת העובדים? `,
-      confirmButtonText: `
-       המשך<i class="fa fa-arrow-right"></i> `,
-      inputValidator: (result) => {
-        return !result && "נא לאשר את הפעולה";
-      }
-    });
-    if (accept) {
-      this.employeeService.deleteEmployee(employee.id).subscribe({
-        next: () => {
-          Swal.fire("!העובד נמחק בהצלחה");
-          this.getEmployees();
-
-        },
-        error: (err) => {
-          Swal.fire(
-            'המחיקה נכשלה',
-            'error'
-          );
-        }
-      });
+  async loadEmployees(): Promise<void> {
+    this.isLoading = true;
+    try {
+      this.employees = await this.employeeService.getEmployees();
+      this.filterEmployees();
+    } catch (err) {
+      console.error('Error loading employees', err);
+    } finally {
+      this.isLoading = false;
     }
   }
 
-  editEmployee(employee: Employee) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '500px';
-    dialogConfig.height = '600px';
-    dialogConfig.data = { employee: employee }; // שליחת העובד לקומפוננטה
-
-    const dialogRef = this.dialog.open(EditEmployeeComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.getEmployees();
-    });
+  filterEmployees(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (!term) {
+      this.filteredEmployees = [...this.employees];
+    } else {
+      this.filteredEmployees = this.employees.filter(
+        (e) =>
+          e.first_name.toLowerCase().includes(term) ||
+          e.last_name.toLowerCase().includes(term) ||
+          e.id.includes(term)
+      );
+    }
   }
 
-  filterAll(): void {
-    if (!this.filterByName || this.filterByName.trim() === '') {
-      if (this.employeesList) {
-        this.employeesList.filter = '';
-      }
+  async deleteEmployee(employee: Employee): Promise<void> {
+    if (!confirm(`האם אתה בטוח שברצונך למחוק את ${employee.first_name} ${employee.last_name}?`)) {
       return;
     }
-    const searchTerm = this.filterByName.toLowerCase().trim();
-    if (this.employeesList) {
-      this.employeesList.filter = searchTerm;
+    try {
+      await this.employeeService.deleteEmployee(employee.id);
+      await this.loadEmployees();
+    } catch (err) {
+      alert('המחיקה נכשלה');
     }
   }
 
-  exportToExcel(): void {
-    const fileName = 'employees.xlsx';
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.employeesList.filteredData);
-    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-    saveAs(data, fileName);
-  }
-  showComponent = false;
-
-  addEmployee(): void {
-    const dialogRef = this.dialog.open(AddEmployeeComponent, {
-      width: '650px',
-      height: '420px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.getEmployees();
-    });
+  getGenderLabel(gender: number): string {
+    return gender === 0 ? 'זכר' : 'נקבה';
   }
 
+  formatDate(date: string | null): string {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString('he-IL');
+  }
 
+  getRolesText(employee: Employee): string {
+    if (!employee.employee_roles || employee.employee_roles.length === 0) return '';
+    return employee.employee_roles
+      .map((r) => r.role_title + (r.is_managerial ? ' (ניהולי)' : ''))
+      .join(', ');
+  }
 }

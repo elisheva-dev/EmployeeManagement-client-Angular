@@ -5,9 +5,9 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'employee', pathMatch: 'full' },
-    { path: 'employee',component:AllEmployeesComponent},
-    { path: 'addEmployee', component: AddEmployeeComponent },
-    { path: 'editEmployee', component: EditEmployeeComponent },
-    { path: '**', component:NotFoundComponent },
+  { path: '', redirectTo: 'employee', pathMatch: 'full' },
+  { path: 'employee', component: AllEmployeesComponent },
+  { path: 'addEmployee', component: AddEmployeeComponent },
+  { path: 'editEmployee', component: EditEmployeeComponent },
+  { path: '**', component: NotFoundComponent },
 ];
